@@ -207,21 +207,24 @@ def getIncorrectKeysRevisions():
 	return incorrect_keys_revisions
 
 def load_default(customKeysPath = None):
+	keyfiles = []
+	custom_keyfiles = []
 	if customKeysPath:
 		customPath = Path(customKeysPath).expanduser()
 		if customPath.is_dir():
-			keyfiles = [
+			custom_keyfiles = [
 				customPath.joinpath('prod.keys'),
 				customPath.joinpath('keys.txt'),
 			]
 		else:
-			keyfiles = [customPath]
+			custom_keyfiles = [customPath]
+		keyfiles.extend(custom_keyfiles)
 
 	keyScriptPath = Path(sys.argv[0]).resolve().parent
-	keyfiles = [
+	keyfiles.extend([
 		keyScriptPath / "prod.keys",
 		keyScriptPath / "keys.txt",
-	]
+	])
 
 	for d in config_dirs():
 		keyfiles.extend([
@@ -239,15 +242,15 @@ def load_default(customKeysPath = None):
 
 	if not keys_loaded:
 		if customKeysPath:
-			errorMsg = "Failed to load keys file(s) from --keys:\n" + errorMsg
+			errorMsg = "Failed to load keys file(s) from --keys:\n"
+			errorMsg += "\n".join(str(kf) for kf in custom_keyfiles)
 		else:
 			errorMsg = "Failed to load default keys files:\n"
-	
 			for i, kf in enumerate(keyfiles):
 				if i:
 					errorMsg += "\nor "
 				errorMsg += str(kf)
-	
+
 			errorMsg += (
 				"\n\nPlease dump your keys using "
 				"https://gbatemp.net/download/lockpick_rcm-1-9-15-fw-20-zoria.39129/\n"
