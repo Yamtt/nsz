@@ -181,7 +181,7 @@ class Nsp(Pfs0):
 		if z:
 			self.version = z.groups()[0]
 
-		if path.endswith('.nsp'):
+		if path.endswith(('.nsp','.nsz')):
 			if self.hasValidTicket is None:
 				self.setHasValidTicket(True)
 		elif path.endswith('.nsx'):
