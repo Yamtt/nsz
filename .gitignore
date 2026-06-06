@@ -27,6 +27,7 @@ normal
 logo
 update
 secure
+.venv
 titlekeys.txt
 titledb/
 *.exe
