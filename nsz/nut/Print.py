@@ -23,7 +23,7 @@ spinnerIndex = 0
 if len(argv) > 1:
 	# We must re-parse the command line parameters here because this module
 	# is re-imported in multiple modules which resets the variables each import.
-	args = ParseArguments.parse()
+	args = ParseArguments.parse(for_nutPrint = True)
 
 	# Does the user want machine readable output?
 	if (args.machine_readable):
