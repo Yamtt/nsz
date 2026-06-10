@@ -2,8 +2,8 @@ from argparse import ArgumentParser
 
 class ParseArguments:
 	@staticmethod
-	def parse():
-		parser = ArgumentParser()
+	def parse(for_nutPrint = False):
+		parser = ArgumentParser(add_help = not for_nutPrint)
 		parser.add_argument('file', nargs='*')
 		parser.add_argument('-C', action='store_true', help='Compress NSP/XCI')
 		parser.add_argument('-D', action='store_true', help='Decompress NSZ/XCZ/NCZ')
@@ -42,5 +42,8 @@ class ParseArguments:
 		parser.add_argument('--minimal-output', action='store_true', default=False, help='Print only minimal progress updates in the format "<percentage>%% <current step>".')
 		parser.add_argument('--keys', type=str, default=None, help='Path to a hactool compatible keys file (or directory containing prod.keys/keys.txt).')
 
-		args = parser.parse_args()
+		if for_nutPrint:
+			args, _unknown = parser.parse_known_args()
+		else:
+			args = parser.parse_args()
 		return args
